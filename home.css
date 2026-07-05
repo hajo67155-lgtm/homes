@@ -34,6 +34,7 @@ body {
     border: 1px solid black;
     border-radius: 10px;
     background: burlywood;
+    transition: transform 0.2s ease;
 }
 
 .samples {
@@ -56,7 +57,7 @@ body {
     bottom: 1vw;
 }
 
-.title{
+#title{
     z-index: 5;
     display:none;
     position: absolute;
@@ -70,16 +71,24 @@ body {
     align-items:center;
 }
 
-.title-content{
-    background:white;
-    padding:30px;
-    border-radius:10px;
-    width:20vw;
-    height:10vw;
-    text-align:center;
+#title-content{
+    position: relative;
+    background: white;
+    padding-top: 20px;
+    border-radius: 10px;
+    width: 25vw;
+    height: 25vh;
+    text-align: center;
 }
 
 #exit {
-    right: 1vw;
+    position: absolute;
     top: 1vw;
+    right: 1vw;
+}
+
+#debug {
+    position: absolute;
+    color: black;
+    font-size: 15px;
 }
