@@ -1,6 +1,8 @@
 const add = document.getElementById("add-back");
 const sample = document.getElementById("sample-back");
 const title = document.getElementById("title");
+const titleInput = document.getElementById("titleInput");
+const create = document.getElementById("create");
 const ww = window.innerWidth;
 const wh = window.innerHeight;
 let clone_no = 0, mx = 0, my = 0, mxx = 0, myy = 0, x2 = 0, y2 = 0;
@@ -10,9 +12,17 @@ sample.style.display = "none";
 add.addEventListener("click", function () {
     clone_no++;
     title.style.display = "flex";
+});
+
+document.getElementById("create").onclick = function () {
+    if(titleInput.value != "") {
+    title.style.display = "none";
     add_element();
     update();
-});
+    } else {
+        alert("タイトルを入力してください");
+    }
+}
 
 document.getElementById("exit").onclick = function() {
     title.style.display = "none";
@@ -22,6 +32,12 @@ function add_element() {
     const clone = sample.cloneNode(true);
     clone.id = `project_No${clone_no}`;
     clone.style.display = "block";
+    const titles = clone.querySelector(".samples");
+    titles.textContent = titleInput.value;
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    clone.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
     document.body.appendChild(clone)
 }
 
@@ -40,17 +56,19 @@ document.addEventListener("mousemove", (event) => {
     my = event.clientY - ww*0.05;
     mxx = mx%(ww*0.15);
     myy = my%(ww*0.13);
-    document.getElementById("debug").innerHTML = "x:"+mx+"<br>y:"+my+"<br>mxx:"+mxx+"<br>myy:"+myy+"<br>";
     if(mx%(ww*0.15) < ww*0.1 && mx > 0 && my%(ww*0.13) < ww*0.1 && my > 0) {
         x2 = Math.ceil(mx-mxx)/Math.ceil(ww*0.15)+1;
-        y2 = Math.ceil(my-myy)/Math.ceil(ww*0.13);
-        if(x2+y2 < clone_no) {
+        y2 = Math.ceil(my-myy)/Math.ceil(ww*0.13)*5;
+        if(x2+y2 <= clone_no) {
             const clone_element = document.getElementById(`project_No${x2+y2}`);
+            if(clone_element) {
             clone_element.style.transform = "scale(0.95)";
+            }
         }
     } else {
-        x2 = 0;
-        y2 = 0;
+        const clone_element = document.getElementById(`project_No${x2+y2}`);
+        if(clone_element) {
+        clone_element.style.transform = "scale(1)";
+        }
     }
-    document.getElementById("debug").innerHTML += "<br>x2:"+x2+"<br>y2:"+y2;
 })
